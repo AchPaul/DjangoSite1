@@ -1,0 +1,54 @@
+{% extends 'women/base.html' %}
+{% load women_tags %}
+
+{% block head %}
+{% endblock head %}
+
+{% block content %}
+{% getcats as categories %}<!-- Пользов. тег категорий в women_tags-->
+<ul class="cats">
+{%for c in categories%}
+    {% if c.id == 1%}
+    <li><h3><a href="{{c.get_absolute_url}}" >{{c.name}}</a></h3></li>
+     {% endif%}
+{%endfor%}
+
+</ul>
+
+
+
+<ul class="cats">
+{%for c in categories%}
+    {% if c.id == 2 %}
+    <li><h3><a href="{{c.get_absolute_url}}" >{{c.name}}</a></h3></li>
+     {% endif%}
+{%endfor%}
+
+</ul>
+
+{%if page_obj.has_other_pages%}<!-- Пагинация -->
+<nav class="page_numbers">
+    <ul>
+        {%if page_obj.has_previous%}
+        <li><a href="?page={{page_obj.previous_page_number}}">&lt;</a> </li>
+        {%else%}
+        <li>&lt; </li>
+        {%endif%}
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page_selected">{{p}}</li>
+        {%else%}
+        <li>
+            <a href="?page={{p}}">{{p}}</a>
+        </li>
+        {%endif%}
+        {% endfor %}
+        {%if page_obj.has_next%}
+        <li><a href="?page={{page_obj.next_page_number}}">&gt;</a> </li>
+        {%else%}
+        <li>&gt; </li>
+        {%endif%}
+    </ul>
+    {%endif%}
+</nav>
+{%endblock%}
